@@ -1,12 +1,42 @@
-<!-- login.html -->
-<form id="login-form">
-    <label for="email">E-mail:</label>
-    <input type="email" id="email" name="email" required />
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
-    <label for="password">Wachtwoord:</label>
-    <input type="password" id="password" name="password" required />
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-4">
+            <form id="login-form" class="needs-validation" novalidate>
+                <div class="form-group">
+                    <label for="email">E-mail:</label>
+                    <input type="email" class="form-control" id="email" name="email" required />
+                    <div class="invalid-feedback">Vul een geldig e-mailadres in.</div>
+                </div>
 
-    <button type="submit">Inloggen</button>
-</form>
-<!-- In login.html -->
+                <div class="form-group">
+                    <label for="password">Wachtwoord:</label>
+                    <input type="password" class="form-control" id="password" name="password" required />
+                    <div class="invalid-feedback">Vul je wachtwoord in.</div>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block">Inloggen</button>
+            </form>
+        </div>
+    </div>
+</div>
+
 <script src="../js/login.js"></script>
+<script>
+    (function() {
+        'use strict';
+        window.addEventListener('load', function() {
+            var forms = document.getElementsByClassName('needs-validation');
+            var validation = Array.prototype.filter.call(forms, function(form) {
+                form.addEventListener('submit', function(event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>
