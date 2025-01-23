@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Spel</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+    <h1>Javascript Memory</h1>
+    <div class="status">
+        <p>Verlopen tijd: <span id="elapsed-time">0</span> seconden.</p>
+        <p>Gevonden kaart-paren: <span id="found-pairs">0</span></p>
+        <p>Resterende toontijd:</p>
+        <div class="progress-bar-container">
+            <div class="progress-bar" id="progress-bar"></div>
+        </div>
+    </div>
+</header>
+
+<main>
+    <section id="game">
+        <div id="game-board"></div>
+
+        <aside class="sidebar">
+            <h3>Top vijf</h3>
+            <ol id="top-five">
+                <li>Barack Obama : 200</li>
+                <li>Bernie Sanders : 300</li>
+                <li>Hillary Clinton : 400</li>
+                <li>Donald Trump : 500</li>
+                <li>Jeb Bush : 600</li>
+            </ol>
+            <p>Gemiddelde speeltijd: <span id="average-time">--:--</span></p>
+
+            <label for="card-character">Karakter op kaarten:</label>
+            <select id="card-character">
+                <option value="letters">Letters</option>
+                <option value="numbers">Nummers</option>
+                <option value="symbols">Symbolen</option>
+            </select>
+
+            <label for="board-size">Afmeting bord:</label>
+            <select id="board-size">
+                <option value="4x4">4x4</option>
+                <option value="6x6" selected>6x6</option>
+                <option value="8x8">8x8</option>
+            </select>
+
+            <div class="colors">
+                <label for="closed-color">Kaartkleur</label>
+                <input type="color" id="closed-color" value="#39d688">
+
+                <label for="open-color">Open</label>
+                <input type="color" id="open-color" value="#9b59b6">
+
+                <label for="found-color">Gevonden</label>
+                <input type="color" id="found-color" value="#2ecc71">
+            </div>
+            <button id="start-game">Nieuw Spel</button>
+        </aside>
+    </section>
+</main>
+
+<footer>
+    <p>Made with ❤️</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
