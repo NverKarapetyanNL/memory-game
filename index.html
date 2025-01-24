@@ -10,9 +10,9 @@
 <header>
     <h1>Javascript Memory</h1>
     <div class="status">
-        <p>Verlopen tijd: <span id="elapsed-time">0</span> seconden.</p>
+        <p>Verlopen tijd: <span id="elapsed-time">0</span></p>
         <p>Gevonden kaart-paren: <span id="found-pairs">0</span></p>
-        <p>Resterende toontijd:</p>
+        <p>Resterende toontijd: <span id="rest-time">300</span></p>
         <div class="progress-bar-container">
             <div class="progress-bar" id="progress-bar"></div>
         </div>
@@ -27,20 +27,37 @@
             <ol id="top-five"></ol>
             <p>Gemiddelde speeltijd: <span id="average-time">--:--</span></p>
 
-            <label for="card-character">Karakter op kaarten:</label>
+            <h3>Update E-mail</h3>
+            <form id="email-form">
+                <label for="email">Nieuwe E-mail:</label>
+                <input type="email" id="email" required />
+                <button type="submit">Update E-mail</button>
+            </form>
+            <p id="save-status"></p>
+
+            <label for="closed-character">Karakter op gesloten kaarten:</label>
+            <select id="closed-character">
+                <option value="*">*</option>
+                <option value="#">#</option>
+                <option value="?">?</option>
+                <option value="-">-</option>
+            </select>
+
+            <label for="card-character">Kies uw kaarttype:</label>
             <select id="card-character">
                 <option value="letters">Letters</option>
                 <option value="numbers">Nummers</option>
                 <option value="symbols">Symbolen</option>
+                <option value="dogs">Hondenplaatjes</option>
+                <option value="cats">Kattenplaatjes</option>
+                <option value="lorem">Willekeurige afbeeldingen</option>
             </select>
-
-
 
             <label for="board-size">Afmeting bord:</label>
             <select id="board-size">
-                <option value="4x4">4x4</option>
-                <option value="6x6" selected>6x6</option>
-                <option value="8x8">8x8</option>
+                <option value="4">4x4</option>
+                <option value="6" selected>6x6</option>
+                <option value="8">8x8</option>
             </select>
 
             <div class="colors">
@@ -53,7 +70,9 @@
                 <label for="found-color">Gevonden</label>
                 <input type="color" id="found-color" value="#2ecc71">
             </div>
-            <button id="start-game">Nieuw Spel</button>
+            <button id="new-game">Nieuw Spel</button>
+
+
         </aside>
     </section>
 </main>
@@ -62,12 +81,15 @@
     <p>Made with ❤️</p>
 </footer>
 
-<script type="module" src="js/script.js"></script>
-
-
-
+<script type="module" src="js/script.js" defer></script>
+<script type="module" src="js/game.js"></script>
+<script type="module" src="js/board.js"></script>
+<script type="module" src="js/update-email.js"></script>
+<script type="module" src="js/topFive.js"></script>
+<script type="module" src="js/preferences.js"></script>
+<script type="module" src="js/globalFetch.js"></script>
+<script type="module" src="js/api.js"></script>
+<script type="module" src="js/main.js"></script>
 
 </body>
 </html>
-
-

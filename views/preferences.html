@@ -1,20 +1,19 @@
-<!-- preferences.html -->
 <form id="preferences-form">
-    <label for="image-source">Afbeeldingen Bron:</label>
+    <label for="image-source">Afbeeldingsbron:</label>
     <select id="image-source">
-        <option value="lorem">Lorem Picsum</option>
-        <option value="dogs">DogAPI</option>
-        <option value="cats">CATAAS</option>
+        <option value="dogs">Hondenplaatjes</option>
+        <option value="cats">Kattenplaatjes</option>
+        <option value="lorem">Willekeurige afbeeldingen</option>
     </select>
 
-    <label for="closed-color">Gesloten Kaarten Kleur:</label>
-    <input type="color" id="closed-color" />
+    <label for="found-color">Kleur Gevonden Kaarten:</label>
+    <input type="color" id="found-color" value="#2ecc71">
 
-    <label for="found-color">Gevonden Kaarten Kleur:</label>
-    <input type="color" id="found-color" />
+    <label for="closed-color">Kleur Gesloten Kaarten:</label>
+    <input type="color" id="closed-color" value="#e74c3c">
 
-    <label for="email">E-mailadres:</label>
-    <input type="email" id="email" />
-
-    <button type="submit">Opslaan</button>
+    <button type="submit">Voorkeuren Opslaan</button>
 </form>
+
+<p id="save-status"></p>
+<script type="module" src="/js/preferences.js"></script>

@@ -1,8 +1,7 @@
-// register.js
 document.getElementById('register-form').addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    const name = document.getElementById('name').value;
+    const username = document.getElementById('username').value;
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
 
@@ -10,7 +9,7 @@ document.getElementById('register-form').addEventListener('submit', async (e) =>
         const response = await fetch('http://localhost:8000/register', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name, email, password })
+            body: JSON.stringify({ username, email, password })
         });
 
         if (!response.ok) {
@@ -18,7 +17,7 @@ document.getElementById('register-form').addEventListener('submit', async (e) =>
         }
 
         alert('Registratie succesvol! Je kunt nu inloggen.');
-        window.location.href = 'login.html';
+        window.location.href = '/views/login.html';
     } catch (error) {
         console.error(error);
         alert('Er is een probleem met de registratie.');

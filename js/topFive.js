@@ -3,7 +3,7 @@ export async function fetchTopFive() {
 
     if (!token) {
         alert('Je moet ingelogd zijn om deze pagina te bekijken.');
-        window.location.href = '/login.html';
+        window.location.href = '/views/login.html';
         return;
     }
 
@@ -14,7 +14,7 @@ export async function fetchTopFive() {
     if (response.status === 401) {
         alert('Je sessie is verlopen. Log opnieuw in.');
         localStorage.removeItem('jwt');
-        window.location.href = '/login.html';
+        window.location.href = '/views/login.html';
         return;
     }
 

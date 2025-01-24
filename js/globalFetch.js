@@ -1,4 +1,3 @@
-// globalFetch.js
 const originalFetch = window.fetch;
 
 window.fetch = async (...args) => {
@@ -10,12 +9,17 @@ window.fetch = async (...args) => {
         args[1].headers['Authorization'] = `Bearer ${token}`;
     }
 
-    const response = await originalFetch(...args);
+    try {
+        const response = await originalFetch(...args);
 
-    if (response.status === 401) {
-        alert('Sessie verlopen. Log opnieuw in.');
-        window.location.href = 'login.html';
+        if (response.status === 401) {
+            alert('Sessie verlopen. Log opnieuw in.');
+            window.location.href = 'views/login.html';
+        }
+
+        return response;
+    } catch (error) {
+        console.error('Fetch-fout:', error);
+        throw error;
     }
-
-    return response;
 };

@@ -5,15 +5,15 @@
         <div class="col-md-6 col-lg-4">
             <form id="register-form" class="needs-validation" novalidate>
                 <div class="form-group">
-                    <label for="name">Naam:</label>
-                    <input type="text" class="form-control" id="name" name="name" required />
-                    <div class="invalid-feedback">Vul je naam in.</div>
+                    <label for="username">Username:</label>
+                    <input type="text" class="form-control" id="username" name="username" required />
+                    <div class="invalid-feedback">Vul je username in.</div>
                 </div>
 
                 <div class="form-group">
                     <label for="email">E-mail:</label>
                     <input type="email" class="form-control" id="email" name="email" required />
-                    <div class="invalid-feedback">Vul een geldig e-mailadres in.</div>
+                    <div class="invalid-feedback">Vul een geldig e-mail adres in.</div>
                 </div>
 
                 <div class="form-group">
@@ -22,26 +22,9 @@
                     <div class="invalid-feedback">Vul je wachtwoord in.</div>
                 </div>
 
-                <button type="submit" class="btn btn-primary btn-block">Registreer</button>
+                <button type="submit" class="btn btn-primary btn-block">Registreren</button>
             </form>
         </div>
     </div>
 </div>
-
-<script>
-    (function() {
-        'use strict';
-        window.addEventListener('load', function() {
-            var forms = document.getElementsByClassName('needs-validation');
-            var validation = Array.prototype.filter.call(forms, function(form) {
-                form.addEventListener('submit', function(event) {
-                    if (form.checkValidity() === false) {
-                        event.preventDefault();
-                        event.stopPropagation();
-                    }
-                    form.classList.add('was-validated');
-                }, false);
-            });
-        }, false);
-    })();
-</script>
+<script src="/js/register.js"></script>
