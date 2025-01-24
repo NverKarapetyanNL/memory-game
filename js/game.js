@@ -1,5 +1,8 @@
 import { Board } from './board.js';
 import { fetchImages } from './api.js';
+import { savePreferences } from './preferences.js';
+import {saveGame} from "./saveGame.js";
+import {fetchTopFive} from "./topFive.js";
 
 export class Game {
     constructor(size, source, closedCharacter) {
@@ -14,8 +17,8 @@ export class Game {
         this.startTime = null;
         this.timerInterval = null;
         this.elapsedSeconds = 0;
-        this.remainingSeconds = 300; // Standaard 5 minuten (300 seconden)
-        this.totalPlayTime = []; // Voor gemiddelde tijd
+        this.remainingSeconds = 300;
+        this.totalPlayTime = [];
     }
 
     async startGame() {
@@ -49,7 +52,7 @@ export class Game {
     resetTimers() {
         clearInterval(this.timerInterval);
         this.elapsedSeconds = 0;
-        this.remainingSeconds = 300; // 5 minuten opnieuw instellen
+        this.remainingSeconds = 300;
         document.getElementById('elapsed-time').innerText = '0 seconden';
         document.getElementById('progress-bar').style.width = '100%';
     }
@@ -72,20 +75,38 @@ export class Game {
             }
         }, 1000);
     }
-
     endGame() {
         clearInterval(this.timerInterval);
 
-        // Voeg de speeltijd toe voor het berekenen van het gemiddelde
         this.totalPlayTime.push(this.elapsedSeconds);
 
-        // Bereken gemiddelde tijd
         const totalTime = this.totalPlayTime.reduce((acc, time) => acc + time, 0);
         const averageTime = Math.floor(totalTime / this.totalPlayTime.length);
         document.getElementById('average-time').innerText = `${averageTime} seconden`;
 
         alert(`Spel beëindigd! Je hebt ${this.pairsFound} paren gevonden.`);
+
+        // Verzamel de gegevens die nodig zijn voor de backend
+        const gameData = {
+            score: this.pairsFound,
+            api: this.source,
+            color_found: document.getElementById('found-color').value,
+            color_closed: document.getElementById('closed-color').value,
+        };
+
+        // Sla het spel op in de backend
+        saveGame(gameData)
+            .then(() => {
+                console.log('Spel succesvol opgeslagen in de database.');
+                fetchTopFive(); // Update de Top Five na het opslaan van het spel
+            })
+            .catch((error) => {
+                console.error('Fout bij het opslaan van spelgegevens:', error);
+                alert('Opslaan van het spel is mislukt.');
+            });
     }
+
+
 
     addEventListeners() {
         this.board.tiles.forEach(tile => {
@@ -107,7 +128,6 @@ export class Game {
         } else if (this.source === 'symbols') {
             const baseSymbols = ['❤', '★', '☀', '☂', '♣', '♦', '♠', '♛', '⚽', '☕'];
 
-            // Herhaal symbolen als de basislijst niet genoeg is
             const repeatedSymbols = Array.from({ length: totalPairs }, (_, i) => baseSymbols[i % baseSymbols.length]);
             return repeatedSymbols
                 .flatMap(symbol => [symbol, symbol])
@@ -174,11 +194,37 @@ export class Game {
     }
 }
 
-document.getElementById('new-game').addEventListener('click', () => {
-    const size = parseInt(document.getElementById('board-size').value);
-    const source = document.getElementById('card-character').value;
-    const closedCharacter = document.getElementById('closed-character').value;
+// Start een nieuw spel en sla voorkeuren op
+document.getElementById('new-game').addEventListener('click', async () => {
+    try {
+        const size = parseInt(document.getElementById('board-size').value);
+        const source = document.getElementById('card-character').value;
+        const closedCharacter = document.getElementById('closed-character').value;
 
-    const game = new Game(size, source, closedCharacter);
-    game.startGame().then(() => console.log('Nieuw spel gestart'));
+        const closedColor = document.getElementById('closed-color').value;
+        const openColor = document.getElementById('open-color').value;
+        const foundColor = document.getElementById('found-color').value;
+
+        const preferences = {
+            preferred_api: source,
+            preferred_color_closed: closedColor,
+            preferred_color_found: foundColor,
+        };
+
+        // Sla voorkeuren op (optioneel)
+        await savePreferences(preferences);
+
+        const game = new Game(size, source, closedCharacter);
+        await game.startGame();
+
+        // Pas kleuren toe
+        document.documentElement.style.setProperty('--closed-color', closedColor);
+        document.documentElement.style.setProperty('--open-color', openColor);
+        document.documentElement.style.setProperty('--found-color', foundColor);
+
+        console.log('Nieuw spel gestart met aangepaste kleuren:', { closedColor, openColor, foundColor });
+    } catch (error) {
+        console.error('Fout bij het starten van een nieuw spel:', error);
+        alert('Er ging iets mis bij het starten van een nieuw spel. Controleer de console voor meer details.');
+    }
 });

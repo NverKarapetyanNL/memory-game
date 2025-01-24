@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.log('Scores ontvangen van backend:', scores);
         if (!scores) return;
 
-        scores.forEach(score => {
+        scores.slice(0, 5).forEach(score => {
             const username = score.username || 'Onbekend';
             const value = score.score || 0;
 

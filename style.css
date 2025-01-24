@@ -1,4 +1,10 @@
-/* Algemene opmaak */
+/* Algemene mobiele stijl (basis) */
+:root {
+    --closed-color: #39d688; /* Standaard gesloten kleur */
+    --open-color: #9b59b6;   /* Standaard open kleur */
+    --found-color: #2ecc71;  /* Standaard gevonden kleur */
+}
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -39,18 +45,22 @@ header {
 
 main {
     display: flex;
-    justify-content: center;
+    flex-direction: column; /* Mobiele weergave: alles onder elkaar */
+    align-items: center;
     margin-top: 20px;
-    flex-wrap: wrap;
+    gap: 20px;
 }
 
 #game {
     display: flex;
+    flex-direction: column; /* Sidebar onderaan op mobiel */
     gap: 20px;
+    width: 100%; /* Volledige breedte op mobiel */
 }
 
 #game-board {
     display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 kolommen op mobiel */
     gap: 10px;
     background-color: white;
     padding: 20px;
@@ -58,64 +68,7 @@ main {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     justify-content: center;
     align-content: center;
-}
-
-
-.card.open {
-    background-color: #9b59b6;
-    transform: scale(1.1);
-}
-
-.card.found {
-    background-color: #2ecc71;
-    cursor: default;
-}
-
-.sidebar {
-    max-width: 300px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    background-color: #fff;
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.sidebar h3 {
-    margin: 0;
-    text-align: center;
-}
-
-.sidebar select,
-.sidebar input[type="color"] {
     width: 100%;
-    margin-top: 5px;
-}
-
-button {
-    padding: 10px 15px;
-    border: none;
-}
-
-#top-five {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-}
-
-#top-five li {
-    padding: 5px;
-    background: #f4f4f4;
-    margin-bottom: 5px;
-    border-radius: 5px;
-}
-#image-source {
-    width: 100%;
-    padding: 8px;
-    font-size: 16px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
 }
 
 .card {
@@ -124,12 +77,23 @@ button {
     align-items: center;
     width: 100px;
     height: 100px;
-    background-color: #39d688;
-    border: 2px solid #2ecc71;
+    background-color: var(--closed-color); /* Dynamische variabele voor gesloten kleur */
+    border: 2px solid var(--found-color); /* Dynamische variabele voor randkleur */
     font-size: 24px;
     font-weight: bold;
     cursor: pointer;
     position: relative;
+    transition: transform 0.3s ease-in-out;
+}
+
+.card.open {
+    background-color: var(--open-color); /* Dynamische variabele voor open kleur */
+    transform: scale(1.1);
+}
+
+.card.found {
+    background-color: var(--found-color); /* Dynamische variabele voor gevonden kleur */
+    cursor: default;
 }
 
 .card img {
@@ -148,4 +112,80 @@ button {
     display: none;
 }
 
+.sidebar {
+    width: 100%; /* Volledige breedte op mobiel */
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
 
+.sidebar h3 {
+    margin: 0;
+    text-align: center;
+}
+
+.sidebar select,
+.sidebar input[type="color"] {
+    width: 100%;
+    margin-top: 5px;
+}
+
+button {
+    padding: 10px 15px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+#top-five {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+#top-five li {
+    padding: 5px;
+    background: #f4f4f4;
+    margin-bottom: 5px;
+    border-radius: 5px;
+}
+
+/* Media queries voor tablets en desktops */
+@media (min-width: 768px) {
+    main {
+        flex-direction: row; /* Zet game en sidebar naast elkaar */
+        justify-content: center;
+        align-items: flex-start;
+        gap: 30px;
+    }
+
+    #game {
+        flex-direction: row; /* Sidebar naast game-board */
+        gap: 30px;
+    }
+
+    #game-board {
+        grid-template-columns: repeat(4, 1fr); /* 4 kolommen op tablets */
+    }
+
+    .sidebar {
+        width: 300px; /* Sidebar krijgt vaste breedte */
+    }
+}
+
+@media (min-width: 1024px) {
+    #game-board {
+        grid-template-columns: repeat(6, 1fr); /* 6 kolommen op desktops */
+    }
+}

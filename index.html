@@ -11,8 +11,8 @@
     <h1>Javascript Memory</h1>
     <div class="status">
         <p>Verlopen tijd: <span id="elapsed-time">0</span></p>
-        <p>Gevonden kaart-paren: <span id="found-pairs">0</span></p>
-        <p>Resterende toontijd: <span id="rest-time">300</span></p>
+        <p>Gevonden kaart-paren: <span id="found-pairs">0 seconden</span></p>
+        <p>Resterende toontijd: <span id="rest-time">300 seconden</span></p>
         <div class="progress-bar-container">
             <div class="progress-bar" id="progress-bar"></div>
         </div>
@@ -55,8 +55,8 @@
 
             <label for="board-size">Afmeting bord:</label>
             <select id="board-size">
-                <option value="4">4x4</option>
-                <option value="6" selected>6x6</option>
+                <option value="4" selected>4x4</option>
+                <option value="6">6x6</option>
                 <option value="8">8x8</option>
             </select>
 
@@ -81,7 +81,6 @@
     <p>Made with ❤️</p>
 </footer>
 
-<script type="module" src="js/script.js" defer></script>
 <script type="module" src="js/game.js"></script>
 <script type="module" src="js/board.js"></script>
 <script type="module" src="js/update-email.js"></script>
@@ -89,7 +88,6 @@
 <script type="module" src="js/preferences.js"></script>
 <script type="module" src="js/globalFetch.js"></script>
 <script type="module" src="js/api.js"></script>
-<script type="module" src="js/main.js"></script>
-
+<script type="module" src="js/saveGame.js"></script>
 </body>
 </html>
