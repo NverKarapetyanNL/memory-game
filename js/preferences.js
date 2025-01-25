@@ -1,7 +1,7 @@
 export async function savePreferences(preferences) {
     const token = localStorage.getItem('jwt');
     if (!token) {
-        alert('Je bent niet ingelogd. Log opnieuw in.');
+        alert('Je moet ingelogd zijn om deze pagina te bekijken.');
         window.location.href = 'login.html';
         return;
     }

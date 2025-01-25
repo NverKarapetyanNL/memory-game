@@ -8,7 +8,12 @@
 </head>
 <body>
 <header>
-    <h1>Javascript Memory</h1>
+    <div class="header-content">
+        <h1>Javascript Memory</h1>
+        <div id="logout-container" class="logout-container">
+            <span id="username">Welkom, <strong>Player</strong></span>
+            <button id="logout-button">Logout</button>
+        </div>
     <div class="status">
         <p>Verlopen tijd: <span id="elapsed-time">0</span></p>
         <p>Gevonden kaart-paren: <span id="found-pairs">0 seconden</span></p>
@@ -16,7 +21,7 @@
         <div class="progress-bar-container">
             <div class="progress-bar" id="progress-bar"></div>
         </div>
-    </div>
+    </div></div>
 </header>
 
 <main>
@@ -70,9 +75,7 @@
                 <label for="found-color">Gevonden</label>
                 <input type="color" id="found-color" value="#2ecc71">
             </div>
-            <button id="new-game">Nieuw Spel</button>
-
-
+            <button id="new-game">Start Game</button>
         </aside>
     </section>
 </main>
@@ -81,6 +84,7 @@
     <p>Made with ❤️</p>
 </footer>
 
+<script type="module" src="js/startGame.js"></script>
 <script type="module" src="js/game.js"></script>
 <script type="module" src="js/board.js"></script>
 <script type="module" src="js/update-email.js"></script>
@@ -89,5 +93,6 @@
 <script type="module" src="js/globalFetch.js"></script>
 <script type="module" src="js/api.js"></script>
 <script type="module" src="js/saveGame.js"></script>
+<script type="module" src="js/logout.js"></script>
 </body>
 </html>

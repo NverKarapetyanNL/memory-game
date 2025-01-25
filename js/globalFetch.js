@@ -13,7 +13,7 @@ window.fetch = async (...args) => {
         const response = await originalFetch(...args);
 
         if (response.status === 401) {
-            alert('Sessie verlopen. Log opnieuw in.');
+            alert('Sessie is verlopen. Log opnieuw in.');
             window.location.href = 'views/login.html';
         }
 

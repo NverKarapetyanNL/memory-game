@@ -1,7 +1,7 @@
 async function updateEmail(email) {
     const token = localStorage.getItem('jwt');
     if (!token) {
-        throw new Error('Je bent niet ingelogd. Log opnieuw in.');
+        throw new Error('Je moet ingelogd zijn om deze pagina te bekijken.');
     }
 
     const payload = JSON.parse(atob(token.split('.')[1]));

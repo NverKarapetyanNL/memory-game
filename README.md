@@ -28,20 +28,20 @@ Een interactieve Javascript Memory Game waarin spelers kaartparen moeten vinden.
 
 ### Backend
 1. Clone de [backend repository](https://github.com/hanze-hbo-ict/memory-backend) of zorg dat de backend draait.
-2. Configureer de backend met een werkende database (bijv. SQLite/MySQL).
+2. Configureer de backend met een werkende SQLite database.
 3. Start de backend-server:
    ```bash
    php -S localhost:8000
 
 ### Frontend
 
-Clone deze repository:
+1. Clone deze repository:
 git clone [frontend repository](https://github.com/NverKarapetyanNL/memory-game)
-Navigeer naar de frontend-map:
+2. Navigeer naar de frontend-map:
 cd memory-game
-Start een lokale server:
+3. Start een lokale server:
 http-server .
-Open de applicatie in je browser:
+4. Open de applicatie in je browser:
 
 ```shell
 php -S localhost:8080
@@ -51,7 +51,7 @@ Gebruik
 Start een nieuw spel:
 
 Selecteer instellingen (kaarttype, bordgrootte, kleuren).
-Klik op "Nieuw Spel".
+Klik op "Start Game".
 Opslaan van voorkeuren:
 
 Voorkeuren worden automatisch opgeslagen bij het starten van een spel.
@@ -88,5 +88,5 @@ Ophalen van eerder opgeslagen voorkeuren.
 
 Technologieën
 Frontend: HTML, CSS, JavaScript (modules)
-Backend: PHP (met SQLite/MySQL database)
+Backend: PHP (met SQLite database)
 Hosting: Lokale server met http-server

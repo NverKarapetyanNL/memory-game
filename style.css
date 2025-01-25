@@ -1,8 +1,7 @@
-/* Algemene mobiele stijl (basis) */
 :root {
-    --closed-color: #39d688; /* Standaard gesloten kleur */
-    --open-color: #9b59b6;   /* Standaard open kleur */
-    --found-color: #2ecc71;  /* Standaard gevonden kleur */
+    --closed-color: #39d688;
+    --open-color: #598cb6;
+    --found-color: #f0f8f3;
 }
 
 body {
@@ -39,13 +38,38 @@ header {
 .progress-bar {
     height: 100%;
     background-color: #2ecc71;
-    width: 100%; /* Dynamisch via JavaScript */
+    width: 100%;
     transition: width 0.3s;
+}
+
+.logout-container {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logout-container span {
+    font-size: 14px;
+    color: white;
+}
+
+.logout-container button {
+    padding: 5px 10px;
+    background-color: #dc3545;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
 }
 
 main {
     display: flex;
-    flex-direction: column; /* Mobiele weergave: alles onder elkaar */
+    flex-direction: column;
     align-items: center;
     margin-top: 20px;
     gap: 20px;
@@ -53,14 +77,14 @@ main {
 
 #game {
     display: flex;
-    flex-direction: column; /* Sidebar onderaan op mobiel */
+    flex-direction: column;
     gap: 20px;
-    width: 100%; /* Volledige breedte op mobiel */
+    width: 100%;
 }
 
 #game-board {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* 2 kolommen op mobiel */
+    grid-template-columns: repeat(2, 1fr);
     gap: 10px;
     background-color: white;
     padding: 20px;
@@ -77,8 +101,8 @@ main {
     align-items: center;
     width: 100px;
     height: 100px;
-    background-color: var(--closed-color); /* Dynamische variabele voor gesloten kleur */
-    border: 2px solid var(--found-color); /* Dynamische variabele voor randkleur */
+    background-color: var(--closed-color);
+    border: 2px solid var(--found-color);
     font-size: 24px;
     font-weight: bold;
     cursor: pointer;
@@ -87,12 +111,12 @@ main {
 }
 
 .card.open {
-    background-color: var(--open-color); /* Dynamische variabele voor open kleur */
+    background-color: var(--open-color);
     transform: scale(1.1);
 }
 
 .card.found {
-    background-color: var(--found-color); /* Dynamische variabele voor gevonden kleur */
+    background-color: var(--found-color);
     cursor: default;
 }
 
@@ -113,7 +137,7 @@ main {
 }
 
 .sidebar {
-    width: 100%; /* Volledige breedte op mobiel */
+    width: 100%;
     background-color: #fff;
     padding: 15px;
     border-radius: 10px;
@@ -149,8 +173,8 @@ button:hover {
 }
 
 #top-five {
-    list-style-type: none;
-    padding: 0;
+    list-style-type: decimal;
+    padding-left: 20px;
     margin: 0;
 }
 
@@ -161,31 +185,30 @@ button:hover {
     border-radius: 5px;
 }
 
-/* Media queries voor tablets en desktops */
 @media (min-width: 768px) {
     main {
-        flex-direction: row; /* Zet game en sidebar naast elkaar */
+        flex-direction: row;
         justify-content: center;
         align-items: flex-start;
         gap: 30px;
     }
 
     #game {
-        flex-direction: row; /* Sidebar naast game-board */
+        flex-direction: row;
         gap: 30px;
     }
 
     #game-board {
-        grid-template-columns: repeat(4, 1fr); /* 4 kolommen op tablets */
+        grid-template-columns: repeat(4, 1fr);
     }
 
     .sidebar {
-        width: 300px; /* Sidebar krijgt vaste breedte */
+        width: 300px;
     }
 }
 
 @media (min-width: 1024px) {
     #game-board {
-        grid-template-columns: repeat(6, 1fr); /* 6 kolommen op desktops */
+        grid-template-columns: repeat(6, 1fr);
     }
 }

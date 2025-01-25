@@ -1,8 +1,7 @@
-import { Board } from './board.js';
-import { fetchImages } from './api.js';
-import { savePreferences } from './preferences.js';
+import {Board} from './board.js';
+import {fetchImages} from './api.js';
 import {saveGame} from "./saveGame.js";
-import {fetchTopFive} from "./topFive.js";
+import {fetchTopFive, updateTopFiveList} from "./topFive.js";
 
 export class Game {
     constructor(size, source, closedCharacter) {
@@ -29,7 +28,9 @@ export class Game {
                     : await fetchImages(this.source, (this.board.size * this.board.size) / 2);
 
             if (symbols.length !== this.board.size * this.board.size) {
-                throw new Error('Aantal symbolen komt niet overeen met de bordgrootte.');
+                throw new Error(
+                    `Aantal symbolen (${symbols.length}) komt niet overeen met de bordgrootte (${this.board.size * this.board.size}).`
+                );
             }
 
             this.board.createBoard(symbols);
@@ -44,10 +45,11 @@ export class Game {
 
             this.addEventListeners();
         } catch (error) {
-            console.error('Fout bij het starten van het spel:', error);
-            alert('Er ging iets mis bij het ophalen van de kaarten. Probeer het opnieuw.');
+            console.error('Fout bij het starten van het spel:', error.message);
+            alert('Er is een fout opgetreden bij het starten van het spel. Controleer de instellingen of probeer opnieuw.');
         }
     }
+
 
     resetTimers() {
         clearInterval(this.timerInterval);
@@ -75,6 +77,7 @@ export class Game {
             }
         }, 1000);
     }
+
     endGame() {
         clearInterval(this.timerInterval);
 
@@ -86,7 +89,6 @@ export class Game {
 
         alert(`Spel beëindigd! Je hebt ${this.pairsFound} paren gevonden.`);
 
-        // Verzamel de gegevens die nodig zijn voor de backend
         const gameData = {
             score: this.pairsFound,
             api: this.source,
@@ -94,19 +96,20 @@ export class Game {
             color_closed: document.getElementById('closed-color').value,
         };
 
-        // Sla het spel op in de backend
         saveGame(gameData)
             .then(() => {
                 console.log('Spel succesvol opgeslagen in de database.');
-                fetchTopFive(); // Update de Top Five na het opslaan van het spel
+
+                return fetchTopFive();
+            })
+            .then(scores => {
+                updateTopFiveList(scores);
             })
             .catch((error) => {
                 console.error('Fout bij het opslaan van spelgegevens:', error);
                 alert('Opslaan van het spel is mislukt.');
             });
     }
-
-
 
     addEventListeners() {
         this.board.tiles.forEach(tile => {
@@ -118,17 +121,17 @@ export class Game {
         const totalPairs = (this.board.size * this.board.size) / 2;
 
         if (this.source === 'letters') {
-            return Array.from({ length: totalPairs }, (_, i) => String.fromCharCode(65 + i))
+            return Array.from({length: totalPairs}, (_, i) => String.fromCharCode(65 + i))
                 .flatMap(symbol => [symbol, symbol])
                 .sort(() => Math.random() - 0.5);
         } else if (this.source === 'numbers') {
-            return Array.from({ length: totalPairs }, (_, i) => i + 1)
+            return Array.from({length: totalPairs}, (_, i) => i + 1)
                 .flatMap(number => [number, number])
                 .sort(() => Math.random() - 0.5);
         } else if (this.source === 'symbols') {
             const baseSymbols = ['❤', '★', '☀', '☂', '♣', '♦', '♠', '♛', '⚽', '☕'];
 
-            const repeatedSymbols = Array.from({ length: totalPairs }, (_, i) => baseSymbols[i % baseSymbols.length]);
+            const repeatedSymbols = Array.from({length: totalPairs}, (_, i) => baseSymbols[i % baseSymbols.length]);
             return repeatedSymbols
                 .flatMap(symbol => [symbol, symbol])
                 .sort(() => Math.random() - 0.5);
@@ -193,38 +196,3 @@ export class Game {
         else card.innerText = this.closedCharacter;
     }
 }
-
-// Start een nieuw spel en sla voorkeuren op
-document.getElementById('new-game').addEventListener('click', async () => {
-    try {
-        const size = parseInt(document.getElementById('board-size').value);
-        const source = document.getElementById('card-character').value;
-        const closedCharacter = document.getElementById('closed-character').value;
-
-        const closedColor = document.getElementById('closed-color').value;
-        const openColor = document.getElementById('open-color').value;
-        const foundColor = document.getElementById('found-color').value;
-
-        const preferences = {
-            preferred_api: source,
-            preferred_color_closed: closedColor,
-            preferred_color_found: foundColor,
-        };
-
-        // Sla voorkeuren op (optioneel)
-        await savePreferences(preferences);
-
-        const game = new Game(size, source, closedCharacter);
-        await game.startGame();
-
-        // Pas kleuren toe
-        document.documentElement.style.setProperty('--closed-color', closedColor);
-        document.documentElement.style.setProperty('--open-color', openColor);
-        document.documentElement.style.setProperty('--found-color', foundColor);
-
-        console.log('Nieuw spel gestart met aangepaste kleuren:', { closedColor, openColor, foundColor });
-    } catch (error) {
-        console.error('Fout bij het starten van een nieuw spel:', error);
-        alert('Er ging iets mis bij het starten van een nieuw spel. Controleer de console voor meer details.');
-    }
-});
